@@ -45,7 +45,7 @@ class UserController extends Controller
 
         // $user = UserModel::where('level_id',1)->first();
 
-        // $user = UserModel::firstWhere('level_id',1);
+        $user = UserModel::firstWhere('level_id',1);
 
         // $user = UserModel::findOr(1,['username','nama'], function(){
         //     abort(404);
@@ -140,8 +140,14 @@ class UserController extends Controller
     //     $user -> wasChanged('nama');
     //     dd($user->wasChanged(['nama','username']));
 
-    $user=UserModel::all();
-    return view('user',['data' => $user]);
+    // $user=UserModel::all();
+    // return view('user',['data' => $user]);
+
+    // $user = UserModel::with('level')->get();
+    // dd($user);
+
+    $user = UserModel::with('level')->get();
+    return view('user', ['data'=>$user]);
     }
 
     public function tambah(){
