@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -153,13 +154,15 @@ class UserController extends Controller
     public function tambah(){
         return view('user_tambah');
     }
-    public function tambah_simpan(Request $request){
-        UserModel::create([
+    public function tambah_simpan(StoreUserRequest $request){
+
+        $validated=$request->validated(UserModel::create([
             'username'=> $request->username,
             'nama'=> $request->nama,
             'password'=>Hash::make('$request->password'),
             'level_id'=> $request->level_id
-        ]);
+        ]));
+
         return redirect('/user');
     }
 
