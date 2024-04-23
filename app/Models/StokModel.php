@@ -10,7 +10,7 @@ class StokModel extends Model
     use HasFactory;
     protected $table = "t_stok";
     protected $primaryKey = "stok_id";
-    protected $fillable = ['stokid','barang_id', 'user_id', 'stok_tanggal', 'stok_jumlah'];
+    protected $fillable = ['stok_id','barang_id', 'user_id', 'stok_tanggal', 'stok_jumlah'];
 
     public function barang()
     {

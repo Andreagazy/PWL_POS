@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\POScontroller;
 use App\Http\Controllers\StokController;
@@ -56,7 +59,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::delete('/{id}', [UserController::class, 'destroy']); // menghapus data user
 });
 Route::group(['prefix' => 'kategori'], function () {
-    Route::get('/', [KategoriController::class, 'index']); // menampilkan halaman awal kategori
+    // Route::get('/', [KategoriController::class, 'index']); // menampilkan halaman awal kategori
     Route::post('/list', [KategoriController::class, 'list']); // menampilkan data kategori dalam bentuk json untuk datatables
     Route::get('/create', [KategoriController::class, 'create']); // menampilkan halaman form tambah kategori
     Route::post('/', [KategoriController::class, 'store']); // menyimpan data kategori baru
@@ -106,3 +109,19 @@ Route::group(['prefix' => 'penjualan'], function () {
     Route::put('/{id}', [PenjualanController::class, 'update']); // menyimpan perubahan data penjualan
     Route::delete('/{id}', [PenjualanController::class, 'destroy']); // menghapus data penjualan
 });
+
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::get('register', [AuthController::class, 'register'])->name('register');
+Route::post('proses_login', [AuthController::class, 'proses_login'])->name('proses_login');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('proses_register', [AuthController::class, 'proses_register'])->name('proses_register');
+
+Route::group(['middleware'=> ['auth']],function(){
+    Route::group(['middleware'=> ['cek_login:1']],function(){
+        Route::resource('admin',AdminController::class);
+    });
+    Route::group(['middleware'=> ['cek_login:2']],function(){
+        Route::resource('manager',ManagerController::class);
+    });
+});
+
