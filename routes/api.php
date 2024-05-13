@@ -25,7 +25,7 @@ Route::post('/register', RegisterController::class)->name('register');
 Route::post('/login', LoginController::class)->name('login');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-}); 
+});
 Route::post('/logout', LogoutController::class)->name('logout');
 
 
@@ -52,3 +52,6 @@ Route::post('kategori', [KategoriController::class, 'store']);
 Route::get('kategori/{kategori}', [KategoriController::class, 'show']);
 Route::put('kategori/{kategori}', [KategoriController::class, 'update']);
 Route::delete('kategori/{kategori}', [KategoriController::class, 'destroy']);
+
+Route::post('/register1',RegisterController::class)->name('register1');
+Route::post('/transaksi', [BarangController::class, 'store']);
