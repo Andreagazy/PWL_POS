@@ -70,15 +70,23 @@ class BarangController extends Controller
             'barang_nama' => 'required|string|max:100',
             'kategori_id' => 'required|integer',
             'harga_beli' => 'required|integer',
-            'harga_jual' => 'required|integer'
+            'harga_jual' => 'required|integer',
+            'berkas' => 'required',
         ]);
+
+        $extFile = $request->berkas->extension();
+        $nama = $request->barang_nama . ".$extFile";
+        $path = $request->berkas->move('gambar', $nama);
+        $path = str_replace("\\", "//", $path);
+        $pathBaru = asset('gambar/' . $nama);
 
         BarangModel::create([
             'barang_kode' => $request->barang_kode,
             'barang_nama' => $request->barang_nama,
             'kategori_id' => $request->kategori_id,
             'harga_beli' => $request->harga_beli,
-            'harga_jual' => $request->harga_jual
+            'harga_jual' => $request->harga_jual,
+            'image' => $pathBaru,
         ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil disimpan');
@@ -129,15 +137,15 @@ class BarangController extends Controller
             'barang_nama' => 'required|string|max:100',
             'kategori_id' => 'required|integer',
             'harga_beli' => 'required|integer',
-            'harga_jual' => 'required|integer'
+            'harga_jual' => 'required|integer',
         ]);
 
-        BarangModel::create([
+        BarangModel::find($id)->update([
             'barang_kode' => $request->barang_kode,
             'barang_nama' => $request->barang_nama,
             'kategori_id' => $request->kategori_id,
             'harga_beli' => $request->harga_beli,
-            'harga_jual' => $request->harga_jual
+            'harga_jual' => $request->harga_jual,
         ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil diubah');

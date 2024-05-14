@@ -26,8 +26,8 @@ class BarangModel extends Model
     }
 }
 
-{
-    return Attribute::make(
-        get: fn ($image) => url('/storage/posts/' . $image),
-    );
-}
+// {
+//     return Attribute::make(
+//         get: fn ($image) => url('/storage/posts/' . $image),
+//     );
+// }
